@@ -150,3 +150,6 @@
 2017-08-29 00:15:27	5.9s	hungry_jones	ERR	9a77b2bacc13207dfb1db96f69d1b636	6cf9e20c-ee35-4291-adca-5eba47e7a2a7	nextflow test1.nf run
 2017-08-29 00:17:33	6.1s	hungry_snyder	ERR	9a77b2bacc13207dfb1db96f69d1b636	f5908d65-24aa-4781-908a-d38d30b68809	nextflow test1.nf run
 2017-08-29 00:18:33	6.8s	intergalactic_heisenberg	OK	ee8fba256a54d8096d5fb62f488ee819	15fd602f-a51a-4ad4-9238-7c2244ce7ab7	nextflow test1.nf run
+2017-08-31 20:58:53	3.7s	soggy_thompson	ERR	ee8fba256a54d8096d5fb62f488ee819	037ad81f-8771-4afb-9a6e-0e5aacf214ce	nextflow test1.nf run
+2017-08-31 21:01:28	9s	tender_swanson	ERR	ee8fba256a54d8096d5fb62f488ee819	35d7eea8-96a2-4691-aacf-c69d05c7057a	nextflow test1.nf run
+2017-08-31 21:02:19	9.1s	cheesy_dalembert	OK	ee8fba256a54d8096d5fb62f488ee819	792022b3-6c2d-4099-86cf-f8e051017e93	nextflow test1.nf run
