@@ -11,6 +11,9 @@ params.speciesTree="$baseDir/example/test_species.ph"
 params.nn="$baseDir/example/nn1.fasta"
 params.cluster_dir='res_dic/cluster'
 
+params.py_diff = "$baseDir/scripts/fasta_compare.py"
+diff = file(params.py_diff)
+
 
 log.info """\
          R N A T O Y   P I P E L I N E    
@@ -27,6 +30,19 @@ aa_file=file(params.aa)
 speciesTree_file=file(params.speciesTree)
 nn_file=file(params.nn)
 output_file=file(params.output)
+
+process fasta_diff{
+
+	output:
+	stdout result
+
+    """
+    python $diff $aa_file $nn_file
+    """
+}
+
+result.subscribe { println it }
+
 
 process step1_1cluster {
 	 
