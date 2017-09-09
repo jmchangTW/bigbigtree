@@ -12,13 +12,10 @@ if (@ARGV==0){
 }
 my $seqs	= $ARGV[0];
 my $cluster	= $ARGV[1];
-my $DIC		= $ARGV[2];
+
 
 print "\tseq     file= $seqs\n";
 print "\tcluster file= $cluster\n";
-print "\tdic    fasta= $DIC\n\n";
-
-system("mkdir $DIC") if (! -d $DIC);
 
 my $inseq = Bio::SeqIO->new(-file => "<$seqs");
 while (my $seq = $inseq->next_seq) {
@@ -47,7 +44,7 @@ for $species ( keys %species_hash ) {
 	@{$species_hash{$species}} = sort { $a->id cmp $b->id } @{$species_hash{$species}}; 
 }
 for $species ( keys %species_hash ) {
-	$out = Bio::SeqIO->new(-file => ">$DIC/$species.fasta" , '-format' => 'fasta');
+	$out = Bio::SeqIO->new(-file => ">$species.fasta" , '-format' => 'fasta');
 	foreach (@{$species_hash{$species}}) {
 		$out->write_seq($_);
     	}
@@ -55,7 +52,7 @@ for $species ( keys %species_hash ) {
 
 #output fasta file by group
 for $group ( keys %cluster_hash ) {
-	$out = Bio::SeqIO->new(-file => ">$DIC/cluster$group.fasta" , '-format' => 'fasta');
+	$out = Bio::SeqIO->new(-file => ">cluster$group.fasta" , '-format' => 'fasta');
 	foreach (@{$cluster_hash{$group}}) {
 		$out->write_seq($_);
     	}

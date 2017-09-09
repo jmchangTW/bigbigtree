@@ -1,0 +1,90 @@
+Sep-09 23:51:16.962 [main] DEBUG nextflow.cli.Launcher - $> /bin/nextflow bigbigtree.nf run
+Sep-09 23:51:17.495 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 0.25.5
+Sep-09 23:51:17.535 [main] INFO  nextflow.cli.CmdRun - Launching `bigbigtree.nf` [dreamy_brown] - revision: e46514324d
+Sep-09 23:51:17.578 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: nextflow.config
+Sep-09 23:51:17.587 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/nextflow.config
+Sep-09 23:51:18.329 [main] DEBUG nextflow.config.ConfigBuilder - Setting config profile: 'standard'
+Sep-09 23:51:18.573 [main] DEBUG nextflow.Session - Session uuid: 9db3be5f-e15c-41e5-b8a0-2503485d12ed
+Sep-09 23:51:18.574 [main] DEBUG nextflow.Session - Run name: dreamy_brown
+Sep-09 23:51:18.576 [main] DEBUG nextflow.Session - Executor pool size: 2
+Sep-09 23:51:18.607 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 0.25.5 build 4516
+  Modified: 04-08-2017 12:43 UTC (20:43 CDT)
+  System: Linux 4.10.0-30-generic
+  Runtime: Groovy 2.4.11 on OpenJDK 64-Bit Server VM 1.8.0_131-8u131-b11-2ubuntu1.16.04.3-b11
+  Encoding: UTF-8 (UTF-8)
+  Process: 30377@tea9296-VirtualBox [127.0.1.1]
+  CPUs: 1 - Mem: 2 GB (157.8 MB) - Swap: 2 GB (1.3 GB)
+Sep-09 23:51:18.669 [main] DEBUG nextflow.Session - Work-dir: /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/work [ext2/ext3]
+Sep-09 23:51:18.670 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/bin
+Sep-09 23:51:18.850 [main] DEBUG nextflow.Session - Session start invoked
+Sep-09 23:51:18.858 [main] DEBUG nextflow.processor.TaskDispatcher - Dispatcher > start
+Sep-09 23:51:18.859 [main] DEBUG nextflow.script.ScriptRunner - > Script parsing
+Sep-09 23:51:19.426 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Sep-09 23:51:19.443 [main] INFO  nextflow.Nextflow - R N A T O Y   P I P E L I N E    
+=============================
+aa: /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/example/aa1.fasta
+speciesTree : /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/example/test_species.ph
+nn : /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/example/nn1.fasta
+cluster_dir: res_dic/cluster
+
+Sep-09 23:51:19.751 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Sep-09 23:51:19.758 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Sep-09 23:51:19.781 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Sep-09 23:51:19.784 [main] INFO  nextflow.executor.Executor - [warm up] executor > local
+Sep-09 23:51:19.795 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=1; memory=2 GB; capacity=1; pollInterval=100ms; dumpInterval=5m
+Sep-09 23:51:19.812 [main] DEBUG nextflow.processor.TaskDispatcher - Starting monitor: LocalPollingMonitor
+Sep-09 23:51:19.825 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Sep-09 23:51:19.837 [main] DEBUG nextflow.executor.Executor - Invoke register for executor: local
+Sep-09 23:51:19.994 [main] DEBUG nextflow.Session - >>> barrier register (process: step1_1cluster)
+Sep-09 23:51:20.026 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > step1_1cluster -- maxForks: 2
+Sep-09 23:51:20.164 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Sep-09 23:51:20.165 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Sep-09 23:51:20.165 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Sep-09 23:51:20.166 [main] DEBUG nextflow.Session - >>> barrier register (process: step1_2dif)
+Sep-09 23:51:20.206 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > step1_2dif -- maxForks: 2
+Sep-09 23:51:20.238 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Sep-09 23:51:20.238 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Sep-09 23:51:20.239 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Sep-09 23:51:20.239 [main] DEBUG nextflow.Session - >>> barrier register (process: step2_cluster_to_fasta_aa)
+Sep-09 23:51:20.275 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > step2_cluster_to_fasta_aa -- maxForks: 2
+Sep-09 23:51:20.281 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Sep-09 23:51:20.282 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Sep-09 23:51:20.282 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Sep-09 23:51:20.295 [main] DEBUG nextflow.Session - >>> barrier register (process: step2_cluster_to_fasta_nn)
+Sep-09 23:51:20.321 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > step2_cluster_to_fasta_nn -- maxForks: 2
+Sep-09 23:51:20.413 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Sep-09 23:51:20.414 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Sep-09 23:51:20.414 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Sep-09 23:51:20.414 [main] DEBUG nextflow.Session - >>> barrier register (process: step3_1_alignment_aa)
+Sep-09 23:51:20.450 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > step3_1_alignment_aa -- maxForks: 2
+Sep-09 23:51:20.472 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Sep-09 23:51:20.472 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Sep-09 23:51:20.472 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Sep-09 23:51:20.480 [main] DEBUG nextflow.Session - >>> barrier register (process: step3_1_alignment_nn)
+Sep-09 23:51:20.492 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > step3_1_alignment_nn -- maxForks: 2
+Sep-09 23:51:20.518 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Sep-09 23:51:20.519 [main] DEBUG nextflow.Session - Session await
+Sep-09 23:51:20.667 [Task submitter] INFO  nextflow.Session - [7e/e46573] Submitted process > step1_1cluster
+Sep-09 23:51:26.391 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: step1_1cluster; status: COMPLETED; exit: 0; error: -; workDir: /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/work/7e/e4657385f43cf16fba161d922fc28c]
+Sep-09 23:51:26.438 [Actor Thread 2] DEBUG nextflow.Session - <<< barrier arrive (process: step1_1cluster)
+Sep-09 23:51:26.493 [Task submitter] INFO  nextflow.Session - [8d/651ea0] Submitted process > step1_2dif
+Sep-09 23:51:26.799 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: step1_2dif; status: COMPLETED; exit: 0; error: -; workDir: /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/work/8d/651ea06df4b1ca7ec879115fa49ebf]
+Sep-09 23:51:26.811 [Actor Thread 2] DEBUG nextflow.Session - <<< barrier arrive (process: step1_2dif)
+Sep-09 23:51:26.829 [Task submitter] INFO  nextflow.Session - [6e/98dbf7] Submitted process > step2_cluster_to_fasta_nn
+Sep-09 23:51:27.835 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 3; name: step2_cluster_to_fasta_nn; status: COMPLETED; exit: 0; error: -; workDir: /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/work/6e/98dbf781a7f257314068928aa384a1]
+Sep-09 23:51:27.837 [Task submitter] INFO  nextflow.Session - [13/02a287] Submitted process > step2_cluster_to_fasta_aa
+Sep-09 23:51:27.903 [Actor Thread 2] DEBUG nextflow.Session - <<< barrier arrive (process: step2_cluster_to_fasta_nn)
+Sep-09 23:51:28.427 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 4; name: step2_cluster_to_fasta_aa; status: COMPLETED; exit: 0; error: -; workDir: /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/work/13/02a28758700e68e51e2be1648e0e1e]
+Sep-09 23:51:28.449 [Actor Thread 2] DEBUG nextflow.Session - <<< barrier arrive (process: step2_cluster_to_fasta_aa)
+Sep-09 23:51:28.493 [Task submitter] INFO  nextflow.Session - [75/1406e4] Submitted process > step3_1_alignment_aa
+Sep-09 23:51:32.160 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 5; name: step3_1_alignment_aa; status: COMPLETED; exit: 0; error: -; workDir: /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/work/75/1406e43e989e0586ddce5d15cb4e93]
+Sep-09 23:51:32.198 [Actor Thread 2] DEBUG nextflow.Session - <<< barrier arrive (process: step3_1_alignment_aa)
+Sep-09 23:51:32.246 [Task submitter] INFO  nextflow.Session - [de/0912aa] Submitted process > step3_1_alignment_nn
+Sep-09 23:51:32.581 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 6; name: step3_1_alignment_nn; status: COMPLETED; exit: 0; error: -; workDir: /home/tea9296/Downloads/tcoffee-server-prod/bundles/bigtree/test_flow/work/de/0912aa7ae81f855a7994b795c848b2]
+Sep-09 23:51:32.595 [Actor Thread 2] DEBUG nextflow.Session - <<< barrier arrive (process: step3_1_alignment_nn)
+Sep-09 23:51:32.595 [main] DEBUG nextflow.Session - Session await > all process finished
+Sep-09 23:51:32.598 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local)
+Sep-09 23:51:32.598 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Sep-09 23:51:32.629 [main] DEBUG nextflow.CacheDB - Closing CacheDB done
+Sep-09 23:51:32.722 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

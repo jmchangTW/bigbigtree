@@ -3,7 +3,7 @@
 #option parsing
 import sys
 from optparse import OptionParser
-
+inport os
 #file system
 import os, os.path, glob, tempfile
 
@@ -100,7 +100,7 @@ def produce_alns(options, config):
 		TCOFFEE_PAREMETER += ['-mode', 'fmcoffee']
 	elif options.msa_met != "tcoffee":
 	    print("[ERROR] unknow method for MSA " + options.msa_met)
-	    sys.exit(0)
+	   
 
 	if not os.path.isdir(aln_dir):
 		os.mkdir(aln_dir)
@@ -113,7 +113,7 @@ def produce_alns(options, config):
 	for seq_name in seq_list:
 	  aa_aln_f = os.path.join(aln_dir, seq_name+"_aa.fasta_aln")
 	  nn_aln_f = os.path.join(aln_dir, seq_name+"_nn.fasta_aln")
-	  
+	
 	  if (not os.path.exists(aa_aln_f)):
 	    print (" align "+seq_name)
 	    seq_f = os.path.join(aa_dir, seq_name + ".fasta")
