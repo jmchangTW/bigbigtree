@@ -1,10 +1,10 @@
 #! /bin/bash
 ######seting######
-CLUSTER_DIC=$1
+
 mkdir "res_dic"
-SEQ_TMP="$CLUSTER_DIC/seq.fasta"
-CLUSTER_FILE="$CLUSTER_DIC/cluster.txt"
-CLUSTER_VS_SPECIES_TABLE="$CLUSTER_DIC/clusterTable.csv"
+SEQ_TMP="seq.fasta"
+CLUSTER_FILE="cluster.txt"
+CLUSTER_VS_SPECIES_TABLE="clusterTable.csv"
 SIMILARITY_FILE="pairwiseSim.fasta"
 
 HCLUSTER_CMD="hcluster_sg"
@@ -18,8 +18,8 @@ MIN_EDGE_WEIGHT=5
 #########################################
 
 #preprocessing
-[ ! -d $CLUSTER_DIC ] && mkdir $CLUSTER_DIC
-cp $2 $SEQ_TMP
+
+cp $1 $SEQ_TMP
 
 ####generate similarity between seqs by blast evalue####
 #formatdb for blastpgp

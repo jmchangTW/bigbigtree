@@ -29,12 +29,12 @@ function checkGroupOneMember
 }
 
 ######seting######
-CLUSTER_DIC=$1
 
-SEQ_TMP=$3
+
+SEQ_TMP=$2
 CLUSTER_FILE="cluster.txt"
 CLUSTER_VS_SPECIES_TABLE="clusterTable.csv"
-SIMILARITY_FILE=$2
+SIMILARITY_FILE=$1
 
 HCLUSTER_CMD="hcluster_sg"
 BLAST_CMD="blastpgp"
