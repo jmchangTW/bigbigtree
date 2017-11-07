@@ -28,18 +28,23 @@ diff= file(params.py_diff)
 log_file=file(params.logfile)
 
 process step0_check_fasta_diff{
-	output:
-	stdout result
+        input:
+                file SEQ_aa from aa_file
+                file SEQ_nn from nn_file
+        output:
+        stdout result
 
 
-	"""
-	python $diff $aa_file $nn_file 
- 	
-	"""
+        """
+        python $diff $SEQ_aa $SEQ_nn
+        
+        """
 
 
 }
+
 result.subscribe {println it}
+
 
 process step1_1cluster {
 	 
