@@ -21,7 +21,7 @@ Make sure you have installed nextflow, python and perl:bio.
 Usage 
 --------------------
 
-	nextflow run bigbigtree.nf --aa  --nn 
+	
 	
 	compulsory:  
         	--aa	 input of Proteins sequences in FASTA format,the each sequence ID must end with a suffix specifying the Species information separated by a underscore char.For Example:    >XXX_SPECIES there 'XXX' is the sequence ID and 'SPECIES' is the species code.
