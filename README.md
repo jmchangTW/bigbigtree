@@ -12,7 +12,10 @@ Clone the git repository on your computer with the following command:
 
     git clone https://github.com/jmchanglab/bigbigtree.git
     
-    
+or
+
+	nextflow clone jmchanglab/bigbigtree
+
 Make sure you have installed nextflow, python and perl:bio. 
 
 
@@ -38,5 +41,15 @@ Usage
 	
         	
 For instance:
->nextflow run bigbigtree.nf --aa 'example/Or_aa.fasta' --nn 'example/Or_nn_v2.fasta' --speciesTree 'example/speciesTree.ph' --msa_mode 'tcoffee' --tree_mode 'phyml' --logfile '$baseDir/nextflow.log'
+>nextflow run main.nf --aa 'example/Or_aa.fasta' --nn 'example/Or_nn_v2.fasta' --speciesTree 'example/speciesTree.ph' --msa_mode 'tcoffee' --tree_mode 'phyml' --logfile '$baseDir/nextflow.log'
 
+
+Docker 
+--------------------
+If you have installed Docker, you can execute nextflow code with my docker container.Using the command below to get the docker image: 
+
+	docker pull tsaihanlung/mybiocontainer-python-bioperl
+
+Execute nextflow with docker:
+
+	nextflow run main.nf -with-docker 1a265f5fe961
