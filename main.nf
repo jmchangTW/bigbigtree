@@ -9,6 +9,8 @@ params.msa_mode='fmcoffee'
 params.py_diff="$baseDir/scripts/fasta_dif.py"
 params.logfile="$baseDir/nextflow.log"
 params.tree_mode="treebest"
+params.file_path=".file_path"
+
 log.info """\
          R N A T O Y   P I P E L I N E    
          =============================
@@ -26,6 +28,7 @@ speciesTree_file=file(params.speciesTree)
 nn_file=file(params.nn)
 diff= file(params.py_diff)
 log_file=file(params.logfile)
+path_file=file(params.file_path)
 
 process step0_check_fasta_diff{
         input:
@@ -179,6 +182,7 @@ result3_1n.subscribe {log_file.append("$it") }
 process step3_2_deal_filename{
 	input:
 	 file aa from aln_fasta_aa_3_2.collect()
+	 file p from path_file
 
 
 	output:
@@ -196,6 +200,7 @@ process step3_2_deal_duplicate{
 	input:
 	 file nn from aln_fasta_nn.collect()
 	 file aa from alnfa.flatten()
+	 file p from path_file
 	output:
 	 file "*.fasta_ali_nn" into aln_nn_tocon
 	 stdout result3_3
@@ -217,7 +222,7 @@ result3_3.subscribe {log_file.append("$it") }
 process step3_2_concatenate{
 	input:
 	 file nn_tocon from aln_nn_tocon.collect()
-
+	 file p from path_file
 	output:
 	 file 'concatenation.fasta_aln' into concatenate_aln_best,concatenate_aln_phy
 	 stdout result3_4
@@ -233,6 +238,7 @@ process step4_1_produce_treebest {
 
         input:
 		file con_fasta_aln from concatenate_aln_best
+		file p from path_file
         output:
 		file 'concatenation.ph' into con_ph_best
 		stdout result4_1
@@ -250,6 +256,7 @@ process step4_1_produce_tree_phyml {
 
         input:
 		file con_fasta_aln from concatenate_aln_phy
+		file p from path_file
         output:
 		file 'concatenation.ph' into con_ph_phy
 		stdout result4_2
@@ -274,6 +281,7 @@ process step4_2_deal_cluster{
 
 	input:
 	 file  nnn from aln_fasta_nn_4_1.collect()
+	 file p from path_file
 	output:
 	 file 'cluster*.aln_nn' into aln_4_2,aln_4_2_phy
 	 stdout result4_3
@@ -294,6 +302,7 @@ process step4_2_produce_tree {
 		file aln_nn from aln_4_2.flatten()
 		file con from con_ph_best
 		file speciesTree from speciesTree_file
+		file p from path_file
 	output:
 		file '*.ph' into clu_ph
 		stdout result4_4
@@ -316,6 +325,7 @@ process step4_2_produce_tree_phyml {
 		file aln_nn from aln_4_2_phy.flatten()
 		file con from con_ph_phy
 		file speciesTree from speciesTree_file
+		file p from path_file
 	output:
 		file '*.ph' into clu_ph_phy
 		stdout result4_5
@@ -340,6 +350,7 @@ process step4_3_produce_tree {
 	input:
 		file cluster_ph from clu_ph.collect()
 		file con from con_ph_best
+		file p from path_file
 
 	output:
 		file 'final.ph' into final_result
@@ -359,6 +370,7 @@ process step4_3_produce_tree_phyml {
 	input:
 		file cluster_ph from clu_ph_phy.collect()
 		file con from con_ph_phy
+		file p from path_file
 
 	output:
 		file 'final.ph' into final_result_phyml
