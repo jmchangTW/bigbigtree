@@ -52,9 +52,13 @@ MIN_EDGE_WEIGHT=5
 #	-w NUM     minimum edge weight [20]
 #	-m NUM     maximum size [500]
 echo " [RUN] HCluster"
-SPECIES_NUM=$(grep ">" $SEQ_TMP|awk -F_ '{print $NF}'|sort|uniq|wc -l)
+#SPECIES_NUM=$(grep ">" $SEQ_TMP|awk -F_ '{print $NF}'|sort|uniq|wc -l)
+SPECIES_NUM=$3
+echo "$SPECIES_NUM"
 # $HCLUSTER_CMD -w $MIN_EDGE_WEIGHT -m $SPECIES_NUM $SIMILARITY_FILE -o $CLUSTER_FILE
 $HCLUSTER_CMD -m $SPECIES_NUM $SIMILARITY_FILE -o $CLUSTER_FILE
+#$HCLUSTER_CMD -m 9 $SIMILARITY_FILE -o $CLUSTER_FILE
+
 if [ -e $CLUSTER_FILE ]
 then
         checkGroupOneMember

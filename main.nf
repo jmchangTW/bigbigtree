@@ -6,6 +6,7 @@ params.speciesTree="$baseDir/example/test_species.ph"
 params.nn="$baseDir/example/nn1.fasta"
 params.cluster_dir='res_dic/cluster'
 params.msa_mode='fmcoffee'
+params.species_Number='9'
 params.py_diff="$baseDir/scripts/fasta_dif.py"
 params.logfile="$baseDir/nextflow.log"
 params.tree_mode="treebest"
@@ -78,6 +79,7 @@ process step1_2dif  {
 	 
 	 file SIMILARITY_FILE
 	 file SEQ_fasta_aa from aa_file
+
 	output:
 	 
 	 file 'cluster.txt' into TEXT_CLUSTER
@@ -85,7 +87,7 @@ process step1_2dif  {
 	 stdout result1_2
 	
 	"""
-	step1_2  $SIMILARITY_FILE $SEQ_fasta_aa
+	step1_2  $SIMILARITY_FILE $SEQ_fasta_aa ${params.species_Number}
 	"""
 
 }
