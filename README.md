@@ -37,7 +37,7 @@ Usage
 		--speciesTree		input of species Tree
 		--msa_mode		can choose fmcoffee,mcoffee,tcoffee(default:fmcoffee)
 		--tree_mode		can chhose treebest,phyml(default:treebest)
-		--species_Number
+		--cluster_Number	recommended set to the number of species or larger(default:9)
 		--logfile 	
 	
         	
