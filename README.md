@@ -53,4 +53,4 @@ If you have installed Docker, you can execute nextflow code with my docker conta
 
 Execute nextflow with docker:
 
-	./nextflow run main.nf -with-docker 1a265f5fe961
+	./nextflow run main.nf -with-docker
