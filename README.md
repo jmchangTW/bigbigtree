@@ -8,6 +8,10 @@ bigbigtree is a  divide and concatenate strategy for the phylogenetic reconstruc
 Compile/Installation 
 --------------------
 
+Install Nextflow
+
+	curl -s https://get.nextflow.io | bash
+
 Clone the git repository on your computer with the following command: 
 
 	git clone https://github.com/jmchanglab/bigbigtree.git
@@ -16,7 +20,12 @@ or
 
 	./nextflow clone jmchanglab/bigbigtree
 
-Make sure you have installed nextflow, python and perl:bio. 
+If you get some permission error:
+
+	chmod -R 777 bigbigtree/
+
+
+Make sure you have installed python and perl:bio. 
 
 
 
