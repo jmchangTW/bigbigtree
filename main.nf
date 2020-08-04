@@ -5,7 +5,8 @@ params.aa="$baseDir/example/aa1.fasta"
 params.speciesTree="$baseDir/example/test_species.ph"
 params.nn="$baseDir/example/nn1.fasta"
 params.cluster_dir='res_dic/cluster'
-params.msa_mode='fmcoffee'
+params.msa_mode='tcoffee'
+params.tcoffee_mode='fmcoffee'
 params.cluster_Number='9'
 params.py_diff="$baseDir/scripts/fasta_dif.py"
 params.logfile="$baseDir/nextflow.log"
@@ -97,7 +98,7 @@ process step2_cluster_to_fasta_aa  {
     file TEXT_CLUSTER 
 	 
     output:
-    file '*.fasta' into cluster_fasta_aa
+    file '*.fasta' into cluster_fasta_aa, cluster_fasta_aa_mafft
     stdout result2_1	 
 
     """
@@ -112,7 +113,7 @@ process step2_cluster_to_fasta_nn  {
     file TEXT_CLUSTER 
 
     output:
-    file '*.fasta' into cluster_fasta_nn
+    file '*.fasta' into cluster_fasta_nn, cluster_fasta_nn_mafft
     stdout result2_2	
 
     """
@@ -122,6 +123,7 @@ process step2_cluster_to_fasta_nn  {
 }
 result2_2.subscribe {log_file.append("$it") }
 
+//tcoffee
 process step3_1_alignment_aa {
 	 		
     input:
@@ -131,9 +133,12 @@ process step3_1_alignment_aa {
     file '*.fasta_aln_aa' into aln_fasta_aa,aln_fasta_aa_3_2
     stdout result3_1a
 
+    when:
+        params.msa_mode == 'tcoffee'
+
     script:
     """	
-    t_coffee ${aa_fasta_channel} -multi_core no +keep_name -output fasta_aln  -mode ${params.msa_mode}  -outfile  "${aa_fasta_channel}_aln_aa"
+    t_coffee ${aa_fasta_channel} -multi_core no +keep_name -output fasta_aln  -mode ${params.tcoffee_mode}  -outfile  "${aa_fasta_channel}_aln_aa"
 	
     """	 
 
@@ -149,6 +154,9 @@ process step3_1_alignment_nn {
     output:
     file '*.fasta_aln_nn' into aln_fasta_nn,aln_fasta_nn_4_1
     stdout result3_1n
+
+    when:
+        params.msa_mode == 'tcoffee'
 	 
     script:
     """	
@@ -159,10 +167,59 @@ process step3_1_alignment_nn {
 }
 result3_1n.subscribe {log_file.append("$it") }
 
+//mafft
+process step3_1_alignment_aa_mafft { 
+    label 'mafft'
+    input:
+    file aa_fasta_channel from cluster_fasta_aa_mafft.flatten()
+    
+    output:
+    file '*.fasta_aln_aa' into aln_fasta_aa_mafft,aln_fasta_aa_3_2_mafft
+    stdout result3_1a_mafft
+
+    when:
+        params.msa_mode == 'mafft'
+
+    script:
+    """ 
+    mafft --auto --inputorder ${aa_fasta_channel} > ${aa_fasta_channel}_aln_aa    
+    """  
+
+}
+result3_1a_mafft.subscribe {log_file.append("$it") }
+
+process step3_1_alignment_nn_mafft {
+    label 'mafft'
+    input:
+    file alnaa from aln_fasta_aa_mafft.collect()
+    file nnf from cluster_fasta_nn_mafft.flatten()
+
+    output:
+    file '*.fasta_aln_nn' into aln_fasta_nn_mafft,aln_fasta_nn_4_1_mafft
+    stdout result3_1n_mafft
+
+    when:
+        params.msa_mode == 'mafft'
+     
+    script:
+    """
+    mafft --auto --inputorder --anysymbol ${nnf} > ${nnf}_aln_nn 
+    """  
+
+}
+result3_1n_mafft.subscribe {log_file.append("$it") }
+
+aln_fasta_aa_3_2_compose = aln_fasta_aa_3_2
+    .concat(aln_fasta_aa_3_2_mafft)
+aln_fasta_nn_compose = aln_fasta_nn
+    .concat(aln_fasta_nn_mafft)
+aln_fasta_nn_4_1_compose = aln_fasta_nn_4_1
+    .concat(aln_fasta_nn_4_1_mafft)
+
 process step3_2_deal_filename{
 
     input:
-    file aa from aln_fasta_aa_3_2.collect()
+    file aa from aln_fasta_aa_3_2_compose.collect()
     file p from path_file
 
     output:
@@ -179,7 +236,7 @@ result3_2.subscribe {log_file.append("$it") }
 process step3_2_deal_duplicate{
 
     input:
-    file nn from aln_fasta_nn.collect()
+    file nn from aln_fasta_nn_compose.collect()
     file aa from alnfa.flatten()
     file p from path_file
 
@@ -262,10 +319,11 @@ process step4_1_produce_tree_phyml {
 }
 result4_2.subscribe {log_file.append("$it") }
 
+
 process step4_2_deal_cluster{
 	
     input:
-    file nnn from aln_fasta_nn_4_1.collect()
+    file nnn from aln_fasta_nn_4_1_compose.collect()
     file p from path_file
 
     output:
@@ -278,7 +336,9 @@ process step4_2_deal_cluster{
 }
 result4_3.subscribe {log_file.append("$it") }
 
-
+//merge
+con_ph = con_ph_best
+    .concat(con_ph_phy)
 
 process step4_2_produce_tree {
 
@@ -335,21 +395,23 @@ process step4_2_produce_tree_phyml {
 }
 result4_5.subscribe {log_file.append("$it") }
 
+//merge
+clu_p = clu_ph
+    .concat(clu_ph_phy)
+
+
 process step4_3_produce_tree {
 
     publishDir output_finalTree, pattern: "*.ph", mode: 'copy'
 
     input:
-    file cluster_ph from clu_ph.collect()
-    file con from con_ph_best
+    file cluster_ph from clu_p.collect()
+    file con from con_ph
     file p from path_file
 
     output:
     file 'final.ph' into final_result
-    stdout result4_6
-    
-    when:
-        params.tree_mode == 'treebest'
+    stdout result4_6 
 
     script:	
     """
@@ -359,25 +421,3 @@ process step4_3_produce_tree {
 }
 result4_6.subscribe {log_file.append("$it") }
 
-process step4_3_produce_tree_phyml {
-
-    publishDir output_finalTree, pattern: "*.ph", mode: 'copy'
-
-    input:
-    file cluster_ph from clu_ph_phy.collect()
-    file con from con_ph_phy
-    file p from path_file
-
-    output:
-    file 'final.ph' into final_result_phyml
-    stdout result4_7
-
-    when:
-        params.tree_mode == 'phyml'
-    script:
-    """
-    mergeGroup2bigTree concatenation.ph final.ph 
-    """
-
-}
-result4_7.subscribe {log_file.append("$it") }
