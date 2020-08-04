@@ -44,14 +44,15 @@ Usage
 		
 	optional:	
 		--speciesTree		input of species Tree
-		--msa_mode		can choose fmcoffee,mcoffee,tcoffee(default:fmcoffee)
-		--tree_mode		can chhose treebest,phyml(default:treebest)
+		--msa_mode		can choose tcoffee,mafft(default:tcoffee)
+		--tcoffee_mode		can choose fmcoffee,mcoffee,tcoffee(default:fmcoffee)
+		--tree_mode		can choose treebest,phyml(default:treebest)
 		--cluster_Number	recommended set to the number of species or larger(default:9)
 		--logfile 	
 	
         	
 For instance:
->./nextflow run main.nf --aa 'example/Or_aa.fasta' --nn 'example/Or_nn_v2.fasta' --speciesTree 'example/speciesTree.ph' --msa_mode 'tcoffee' --tree_mode 'phyml' --logfile '$baseDir/nextflow.log'
+>./nextflow run main.nf --aa 'example/Or_aa.fasta' --nn 'example/Or_nn_v2.fasta' --speciesTree 'example/speciesTree.ph' --msa_mode 'mafft' --tree_mode 'phyml' --logfile '$baseDir/nextflow.log'
 
 
 Docker 
