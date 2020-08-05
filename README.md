@@ -25,7 +25,7 @@ If you get some permission error:
 	chmod -R 777 bigbigtree/
 
 
-Make sure you have installed python and perl:bio. 
+Make sure you have installed python and perl:bio, or you can use docker container below.
 
 
 
@@ -52,8 +52,8 @@ Usage
 	
         	
 For instance:
->./nextflow run main.nf --aa 'example/Or_aa.fasta' --nn 'example/Or_nn_v2.fasta' --speciesTree 'example/speciesTree.ph' --msa_mode 'mafft' --tree_mode 'phyml' --logfile '$baseDir/nextflow.log'
-
+>nextflow run main.nf --aa 'example/Or_aa.fasta' --nn 'example/Or_nn_v2.fasta' --speciesTree 'example/speciesTree.ph' --msa_mode 'mafft' --tree_mode 'phyml' --logfile '$baseDir/nextflow.log'
+>nextflow run main.nf --aa 'experiment/preprocessing/treedepth_0.5/5x8_treedepth_0.5/5x8_aa.fasta' --nn 'experiment/preprocessing/treedepth_0.5/5x8_treedepth_0.5/5x8_nn.fasta' --speciesTree 'experiment/preprocessing/treedepth_0.5/5x8_treedepth_0.5/s_tree.trees' --mas_mode 'mafft' --tree_mode 'raxml'
 
 Docker 
 --------------------
@@ -63,4 +63,4 @@ If you have installed Docker, you can execute nextflow code with my docker conta
 
 Execute nextflow with docker:
 
-	./nextflow run main.nf -with-docker
+	nextflow run main.nf -with-docker
