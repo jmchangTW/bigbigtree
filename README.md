@@ -52,7 +52,9 @@ Usage
 	
         	
 For instance:
+
 	nextflow run main.nf --aa 'example/Or_aa.fasta' --nn 'example/Or_nn_v2.fasta' --speciesTree 'example/speciesTree.ph' --msa_mode 'mafft' --tree_mode 'phyml' --logfile '$baseDir/nextflow.log'
+
 	nextflow run main.nf --aa 'experiment/preprocessing/treedepth_0.5/5x8_treedepth_0.5/5x8_aa.fasta' --nn 'experiment/preprocessing/treedepth_0.5/5x8_treedepth_0.5/5x8_nn.fasta' --speciesTree 'experiment/preprocessing/treedepth_0.5/5x8_treedepth_0.5/s_tree.trees' --mas_mode 'mafft' --tree_mode 'raxml'
 
 Docker 
