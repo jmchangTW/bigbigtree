@@ -7,7 +7,7 @@ params.nn="$baseDir/example/nn1.fasta"
 params.cluster_dir='res_dic/cluster'
 params.msa_mode='tcoffee'
 params.tcoffee_mode='fmcoffee'
-params.cluster_Number='9'
+params.cluster_Number='5'
 params.py_diff="$baseDir/scripts/fasta_dif.py"
 params.logfile="$baseDir/nextflow.log"
 params.tree_mode="treebest"
@@ -262,7 +262,7 @@ process step3_2_concatenate{
     file p from path_file
 
     output:
-    file 'concatenation.fasta_aln' into concatenate_aln_best,concatenate_aln_phy
+    file 'concatenation.fasta_aln' into concatenate_aln_best,concatenate_aln_phy, concatenate_aln_raxml
     stdout result3_4
 	
     """
@@ -319,6 +319,25 @@ process step4_1_produce_tree_phyml {
 }
 result4_2.subscribe {log_file.append("$it") }
 
+process step4_1_produce_raxml {
+    label 'raxml'
+    input:
+    file con_fasta_aln from concatenate_aln_raxml
+    file p from path_file
+
+    output:
+    file 'concatenation.ph' into con_ph_raxml
+
+    when:
+        params.tree_mode == 'raxml'
+
+    script:
+    """
+    raxml-ng --msa concatenation.fasta_aln --model GTR+G --thread 4 --seed 2
+    mv *.bestTree concatenation.ph
+    """
+}
+
 
 process step4_2_deal_cluster{
 	
@@ -327,7 +346,7 @@ process step4_2_deal_cluster{
     file p from path_file
 
     output:
-    file 'cluster*.aln_nn' into aln_4_2,aln_4_2_phy
+    file 'cluster*.aln_nn' into aln_4_2,aln_4_2_phy,aln_4_2_raxml
     stdout result4_3
     """
     deal_clustername.pl $nnn
@@ -338,7 +357,7 @@ result4_3.subscribe {log_file.append("$it") }
 
 //merge
 con_ph = con_ph_best
-    .concat(con_ph_phy)
+    .concat(con_ph_phy,con_ph_raxml)
 
 process step4_2_produce_tree {
 
@@ -395,9 +414,53 @@ process step4_2_produce_tree_phyml {
 }
 result4_5.subscribe {log_file.append("$it") }
 
+process step4_2_produce_tree_raxml {
+    //label 'raxml'
+    errorStrategy 'ignore'
+
+    input:
+    file aln_nn from aln_4_2_raxml.flatten()
+    file con from con_ph_raxml
+    file speciesTree from speciesTree_file
+    file p from path_file
+
+    output:
+    file '*.ph' into clu_ph_raxml
+
+    when:
+        params.tree_mode == 'raxml'
+
+    //use simphy to generate subtree
+    script:
+    """
+    touch tempp.code
+    touch tempp
+    t_coffee -other_pg seq_reformat -in $aln_nn -output code_name>  tempp.code
+    t_coffee -other_pg seq_reformat -code  tempp.code -in  $aln_nn -output phylip > tempp
+    phyml -i tempp -b 0
+    postprocess-4-phyml.pl tempp ${aln_nn.getBaseName()}.ph
+    """
+
+/*
+    script:
+    """
+    treebest best -o ${aln_nn.getBaseName()}".ph" $aln_nn -f $speciesTree
+    """
+*/
+
+/*
+    script:
+    """
+    raxml-ng --msa $aln_nn --model GTR+G --thread 4 --seed 2
+    mv *.bestTree ${aln_nn.getBaseName()}.ph
+    """
+*/
+
+}
+
 //merge
 clu_p = clu_ph
-    .concat(clu_ph_phy)
+    .concat(clu_ph_phy,clu_ph_raxml)
 
 
 process step4_3_produce_tree {
