@@ -200,11 +200,18 @@ process step3_1_alignment_nn_mafft {
 
     when:
         params.msa_mode == 'mafft'
-     
+
+/*     
     script:
     """
     mafft --auto --inputorder --anysymbol ${nnf} > ${nnf}_aln_nn 
-    """  
+    """
+*/
+
+    script:
+    """
+    t_coffee -other_pg seq_reformat -in $nnf   -in2 $nnf"_aln_aa"  -action +thread_dna_on_prot_aln -output fasta >   $nnf"_aln_nn"
+    """
 
 }
 result3_1n_mafft.subscribe {log_file.append("$it") }
